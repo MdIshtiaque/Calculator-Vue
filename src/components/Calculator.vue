@@ -3,7 +3,7 @@
     <div class="display">{{ current || 0 }}</div>
     <div @click="clear" class="btn">C</div>
     <div @click="sign" class="btn">+/-</div>
-    <div class="btn">%</div>
+    <div @click="percent" class="btn">%</div>
     <div @click="divide" class="btn operator">÷</div>
     <div @click="append(7)" class="btn">7</div>
     <div @click="append(8)" class="btn">8</div>
@@ -39,7 +39,7 @@ export default {
   methods: {
     clear() {
       this.current = 0;
-      this.previous = 0;
+      this.previous = null;
     },
     sign() {
       this.current > 0 ? this.current = `-${this.current}`
@@ -76,10 +76,15 @@ export default {
       this.setPrevious();
     },
     add() {
-      this.math = (a, b) => a + b;
+      this.math = (a, b) => parseInt(a) + parseInt(b);
       this.setPrevious();
     },
+    percent()
+    {
+      this.current = this.current/100;
+    },
     result() {
+      if(this.previous != null)
       this.current = this.math(this.previous, this.current)
     }
   }
